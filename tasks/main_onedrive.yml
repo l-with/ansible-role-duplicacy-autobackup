@@ -1,0 +1,32 @@
+---
+
+- name: Include storage provider specific taks
+  include_tasks: main_token_file_path.yml
+
+- name: Ensure onedrive token file
+  ansible.builtin.template_file:
+    src: one-token.json.j2
+    dest: "{{ duplicacy_autobackup_token_file_path }}/{{ duplicacy_autobackup_onedrive_token_file_name }}"
+    mode: o-rx
+
+- name: Ensure docker container {{ _duplicacy_autobackup_image }}
+  community.docker.docker_container:
+    name: "{{ duplicacy_autobackup_container_name }}"
+    image: "{{ _duplicacy_autobackup_image }}"
+    restart_policy: always
+    container_default_behavior: compatibility
+    env:
+      BACKUP_NAME: "{{ duplicacy_autobackup_backup_name }}"
+      BACKUP_LOCATION: "{{ duplicacy_autobackup_backup_location }}"
+      BACKUP_SCHEDULE: "{{ duplicacy_autobackup_backup_schedule }}"
+      BACKUP_ENCRYPTION_KEY: "{{ duplicacy_autobackup_backup_encryption_key }}"
+      BACKUP_IMMEDIATELY: "{{ duplicacy_autobackup_backup_immediately }}"
+      DUPLICACY_PRUNE_OPTIONS: "{{ duplicacy_autobackup_prune_options }}"
+      PRUNE_SCHEDULE: "{{ duplicacy_autobackup_prune_schedule }}"
+      ONEDRIVE_TOKEN_FILE: "/srv/{{ duplicacy_autobackup_onedrive_token_file_name }}"
+    volumes:
+      - "{{ duplicacy_autobackup_backup_data }}:/data"
+      - "{{ duplicacy_autobackup_token_file_path }}/{{ duplicacy_autobackup_onedrive_token_file_name }}:/srv/{{ duplicacy_autobackup_onedrive_token_file_name }}"
+
+...
+

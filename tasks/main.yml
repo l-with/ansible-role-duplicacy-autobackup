@@ -1,0 +1,10 @@
+---
+
+- name: Set fact _duplicacy_autobackup_image 
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_image: "{{ duplicacy_autobackup_image }}:{{ duplicacy_autobackup_image_tag }}"
+
+- name: Include storage provider specific task
+  include_tasks: "main_{{ duplicacy_autobackup_storage_provider | regex_replace('[ /]', '_') | lower }}.yml"
+
+...

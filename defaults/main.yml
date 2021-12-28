@@ -1,0 +1,13 @@
+---
+
+duplicacy_autobackup_image: 'ghcr.io/christophetd/duplicacy-autobackup'
+duplicacy_autobackup_image_tag: 'v1.6.0'
+duplicacy_autobackup_container_name: 'ghcr.io/christophetd/duplicacy-autobackup'
+duplicacy_autobackup_token_file_path: '/srv/duplicacy-autobackup'
+duplicacy_autobackup_onedrive_token_file_name: 'one-token.json'
+duplicacy_autobackup_backup_immediately: no
+duplicacy_autobackup_backup_schedule: '0 1 * * *'
+duplicacy_autobackup_prune_options: '-keep 365:3650 -keep 30:365 -keep 7:30 -keep 1:7 -a'
+duplicacy_autobackup_prune_schedule: '0 4 * * *'
+
+...
