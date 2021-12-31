@@ -4,7 +4,26 @@
   ansible.builtin.set_fact:
     _duplicacy_autobackup_image: "{{ duplicacy_autobackup_image }}:{{ duplicacy_autobackup_image_tag }}"
 
+- name: Ensure {{ duplicacy_autobackup_script_file_path }}
+  ansible.builtin.template_file:
+    path: "{{ duplicacy_autobackup_script_file_path }}"
+    state: directory
+
+- name: Ensure {{ duplicacy_autobackup_pre_backup_script_file_name }}
+  ansible.builtin.template_file:
+    src: pre-backup.sh.j2
+    dest: "{{ duplicacy_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}"
+    mode: ug+x,o-rx
+  when: duplicacy_autobackup_pre_backup_script_file_content is defined
+
+- name: Ensure {{ duplicacy_autobackup_post_backup_script_file_name }}
+  ansible.builtin.template_file:
+    src: post-backup.sh.j2
+    dest: "{{ duplicacy_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}"
+    mode: ug+x,o-rx
+  when: duplicacy_autobackup_post_backup_script_file_content is defined
+
 - name: Include storage provider specific task
-  include_tasks: "main_{{ duplicacy_autobackup_storage_provider | regex_replace('[ /]', '_') | lower }}.yml"
+  include_tasks: "main_{{ duplicacy_autobackup_storage_provider | regex_replace('[ /]', '_') | regex_replace('[()]', '') | lower }}.yml"
 
 ...
