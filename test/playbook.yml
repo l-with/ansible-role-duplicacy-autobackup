@@ -1,17 +1,37 @@
 ---
 
 - hosts: localhost
-  roles:
-    - role: ../../ansible-role-duplicacy-autobackup
-      vars:
-        duplicacy_autobackup_container_name: duplicacy-local
-        duplicati_autobackup_script_file_path: "{{ playbook_dir }}/.srv"
-        duplicacy_autobackup_backup_name: "duplicacy-backup"
-        duplicacy_autobackup_backup_location: "{{ playbook_dir }}/.backup"
-        duplicacy_autobackup_backup_encryption_key: encryption_key
-        duplicacy_autobackup_backup_data: "{{ playbook_dir }}/data"
-        duplicacy_autobackup_backup_immediately: 'yes'
-        # duplicacy_autobackup_storage_backend: 'xyzzy'
-        duplicacy_autobackup_storage_backend: 'Local disk'
+
+  tasks:
+
+  - name: Local disk
+    ansible.builtin.include_role:
+      name: ../../ansible-role-duplicacy-autobackup
+    vars:
+      duplicacy_autobackup_container_name: duplicacy-local
+      duplicati_autobackup_script_file_path: "{{ playbook_dir }}/.srv-local"
+      duplicacy_autobackup_backup_name: "duplicacy-backup"
+      duplicacy_autobackup_backup_location: "{{ playbook_dir }}/.backup"
+      duplicacy_autobackup_repository: "{{ playbook_dir }}/repository"
+      duplicacy_autobackup_duplicacy_init_options: '-repository /repository'
+      duplicacy_autobackup_backup_encryption_key: encryption_key
+      duplicacy_autobackup_backup_data: "{{ playbook_dir }}/data"
+      duplicacy_autobackup_backup_immediately: 'yes'
+      # duplicacy_autobackup_storage_backend: 'xyzzy'
+      duplicacy_autobackup_storage_backend: 'Local disk'
+
+  # - name: Backblaze B2
+  #   ansible.builtin.include_role:
+  #     name: ../../ansible-role-duplicacy-autobackup
+  #   vars:
+  #     duplicacy_autobackup_container_name: duplicacy-local
+  #     duplicati_autobackup_script_file_path: "{{ playbook_dir }}/.srv"
+  #     duplicacy_autobackup_backup_name: "duplicacy-backup"
+  #     duplicacy_autobackup_backup_location: "{{ playbook_dir }}/.backup"
+  #     duplicacy_autobackup_backup_encryption_key: encryption_key
+  #     duplicacy_autobackup_backup_data: "{{ playbook_dir }}/data"
+  #     duplicacy_autobackup_backup_immediately: 'yes'
+  #     # duplicacy_autobackup_storage_backend: 'xyzzy'
+  #     duplicacy_autobackup_storage_backend: 'Backblaze B2'
 
 ...
