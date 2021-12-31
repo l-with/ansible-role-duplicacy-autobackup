@@ -6,6 +6,18 @@ fileignoreconfig:
   - >
     SSH_KEY_FILE: "\/srv\/\{\{ duplicacy_autobackup_ssh_key_file_name \}\}"
 
+- filename: tasks/storage_backend_blackblaze_b2.yml
+  allowed_patterns:
+  - >
+    BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
+  - >
+    B2_KEY: "\{\{ duplicacy_autobackup_b2_key \}\}"
+
+- filename: tasks/storage_backend_local_disk.yml
+  allowed_patterns:
+  - >
+    BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
+
 - filename: README.md
   allowed_patterns:
   - >

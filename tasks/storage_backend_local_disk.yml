@@ -1,14 +1,5 @@
 ---
 
-- name: Include token file tasks
-  include_tasks: token_file_path.yml
-
-- name: Ensure SSH key file
-  ansible.builtin.template_file:
-    src: id.j2
-    dest: "{{ duplicacy_autobackup_token_file_path }}/{{ duplicacy_autobackup_ssh_key_file_name }}"
-    mode: o-rx
-
 - name: Ensure docker container {{ _duplicacy_autobackup_image }}
   community.docker.docker_container:
     name: "{{ duplicacy_autobackup_container_name }}"
@@ -23,7 +14,6 @@
       BACKUP_IMMEDIATELY: "{{ duplicacy_autobackup_backup_immediately }}"
       DUPLICACY_PRUNE_OPTIONS: "{{ duplicacy_autobackup_prune_options }}"
       PRUNE_SCHEDULE: "{{ duplicacy_autobackup_prune_schedule }}"
-      SSH_KEY_FILE: "/srv/{{ duplicacy_autobackup_ssh_key_file_name }}"
     volumes:
       - >
         {{ duplicacy_autobackup_backup_data }}:
@@ -33,9 +23,6 @@
           /scripts/pre-backup.sh
       - >
         {{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}:
-          /scripts/post-backup.sh"
-      - >
-        {{ duplicacy_autobackup_token_file_path }}/{{ duplicacy_autobackup_onedrive_token_file_name }}:
-          /srv/{{ duplicacy_autobackup_onedrive_token_file_name }}
+          /scripts/post-backup.sh
 
 ...

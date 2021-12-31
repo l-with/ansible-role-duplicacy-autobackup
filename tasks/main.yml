@@ -1,27 +1,33 @@
 ---
 
-- name: Set fact _duplicacy_autobackup_image 
+- name: Set fact _duplicacy_autobackup_image
   ansible.builtin.set_fact:
     _duplicacy_autobackup_image: "{{ duplicacy_autobackup_image }}:{{ duplicacy_autobackup_image_tag }}"
 
 - name: Ensure {{ duplicacy_autobackup_script_file_path }}
-  ansible.builtin.template_file:
+  ansible.builtin.template:
     path: "{{ duplicacy_autobackup_script_file_path }}"
     state: directory
+    mode: o-rx
 
 - name: Ensure {{ duplicacy_autobackup_pre_backup_script_file_name }}
-  ansible.builtin.template_file:
+  ansible.builtin.template:
     src: pre-backup.sh.j2
     dest: "{{ duplicacy_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}"
     mode: ug+x,o-rx
   when: duplicacy_autobackup_pre_backup_script_file_content is defined
 
 - name: Ensure {{ duplicacy_autobackup_post_backup_script_file_name }}
-  ansible.builtin.template_file:
+  ansible.builtin.template:
     src: post-backup.sh.j2
     dest: "{{ duplicacy_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}"
     mode: ug+x,o-rx
   when: duplicacy_autobackup_post_backup_script_file_content is defined
+
+- name: Check storage backend
+  ansible.builtin.fail:
+    msg: Storage backend '{{ duplicacy_autobackup_storage_backend }}' not supported
+  when: not duplicacy_autobackup_storage_backend in duplicacy_autobackup_storage_backends
 
 - name: Include storage backend specific task
   include_tasks: "storage_backend_{{ duplicacy_autobackup_storage_backend | regex_replace('[ /]', '_') | regex_replace('[()]', '') | lower }}.yml"
