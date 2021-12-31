@@ -17,14 +17,8 @@
       B2_ID: "{{ duplicacy_autobackup_b2_id }}"
       B2_KEY: "{{ duplicacy_autobackup_b2_key }}"
     volumes:
-      - >
-        {{ duplicacy_autobackup_backup_data }}:
-          /data
-      - >
-        {{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}:
-          /scripts/pre-backup.sh
-      - >
-        {{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}:
-          /scripts/post-backup.sh
+      - "{{ duplicacy_autobackup_working_directory }}:/data"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}:/scripts/pre-backup.sh"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}:/scripts/post-backup.sh"
 
 ...
