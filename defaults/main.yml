@@ -1,8 +1,10 @@
 ---
 
 duplicacy_autobackup_image: 'ghcr.io/christophetd/duplicacy-autobackup'
-duplicacy_autobackup_image_tag: 'v1.5.0'    # for v1.60 s. https://github.com/christophetd/duplicacy-autobackup/issues/40
+duplicacy_autobackup_image_tag: 'v1.5.0'  # for v1.60 s. https://github.com/christophetd/duplicacy-autobackup/issues/40
 duplicacy_autobackup_container_name: 'duplicacy-autobackup'
+duplicacy_autobackup_duplicacy_init_options: ''
+duplicacy_autobackup_repository: "{{ duplicacy_autobackup_working_directory }}"
 duplicacy_autobackup_token_file_path: '/srv/duplicacy-autobackup/token'
 duplicacy_autobackup_onedrive_token_file_name: 'one-token.json'
 duplicacy_autobackup_backup_immediately: 'no'
