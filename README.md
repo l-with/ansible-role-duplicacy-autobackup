@@ -13,11 +13,7 @@ install duplicacy autobackup via https://github.com/christophetd/duplicacy-autob
 | backup | duplicacy_autobackup_backup_data | | the path to mount as `data`, e.g. the directory to backup |
 | backup | duplicacy_autobackup_backup_encryption_key | | the value for `BACKUP_ENCRYPTION_KEY`, e.g.  the optional passphrase to encrypt teh backups with before they are stored remotely |
 | backup | duplicacy_autobackup_backup_location | | the value for `BACKUP_LOCATION`, e.g. the [Duplicacy URI](https://github.com/gilbertchen/duplicacy/wiki/Storage-Backends) of where to store the backups |
-| backup | duplicacy_autobackup_storage_provider  | | the storage provider, possible values are  <br /> 
-<ol><li>`Backblaze B2`</li>
-<li>`SSH/SFTP Password`</li>
-<li>`SSH/SFTP Keyfile`</li>
-<li>`Onedrive`</li></ol> |
+| backup | duplicacy_autobackup_storage_provider  | | the storage provider, possible values are  <br /><ol><li>`Backblaze B2`</li><li>`SSH/SFTP Password`</li><li>`SSH/SFTP Keyfile`</li><li>`Onedrive`</li></ol> |
 | backup | duplicacy_autobackup_token_file_path | `/srv/duplicacy-autobackup/token` | the path where the token files are created |
 | backup | duplicacy_autobackup_onedrive_token_file_name | `one-token.json`| the filename for `ONEDRIVE_TOKEN_FILE` |
 | backup | duplicacy_autobackup_onedrive_token_file_content | | the content for `ONEDRIVE_TOKEN_FILE` |
