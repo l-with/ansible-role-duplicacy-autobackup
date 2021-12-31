@@ -1,2 +1,6 @@
 # VS Code
 .dccache
+
+# test
+test/.backup
+test/data/.duplicacy
