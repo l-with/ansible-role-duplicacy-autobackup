@@ -8,21 +8,16 @@
     container_default_behavior: compatibility
     env:
       BACKUP_NAME: "{{ duplicacy_autobackup_backup_name }}"
-      BACKUP_LOCATION: "{{ duplicacy_autobackup_backup_location }}"
+      BACKUP_LOCATION: /backup
       BACKUP_SCHEDULE: "{{ duplicacy_autobackup_backup_schedule }}"
       BACKUP_ENCRYPTION_KEY: "{{ duplicacy_autobackup_backup_encryption_key }}"
       BACKUP_IMMEDIATELY: "{{ duplicacy_autobackup_backup_immediately }}"
       DUPLICACY_PRUNE_OPTIONS: "{{ duplicacy_autobackup_prune_options }}"
       PRUNE_SCHEDULE: "{{ duplicacy_autobackup_prune_schedule }}"
     volumes:
-      - >
-        {{ duplicacy_autobackup_backup_data }}:
-          /data
-      - >
-        {{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}:
-          /scripts/pre-backup.sh
-      - >
-        {{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}:
-          /scripts/post-backup.sh
+      - "{{ duplicacy_autobackup_backup_location }}:/backup"
+      - "{{ duplicacy_autobackup_backup_data }}:/data"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}:/scripts/pre-backup.sh"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}:/scripts/post-backup.sh"
 
 ...
