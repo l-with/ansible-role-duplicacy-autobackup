@@ -4,6 +4,7 @@
   roles:
     - role: ../../ansible-role-duplicacy-autobackup
       vars:
+        duplicacy_autobackup_container_name: duplicacy-local
         duplicati_autobackup_script_file_path: "{{ playbook_dir }}/.srv"
         duplicacy_autobackup_backup_name: "duplicacy-backup"
         duplicacy_autobackup_backup_location: "{{ playbook_dir }}/.backup"
