@@ -1,8 +1,9 @@
 ---
 
 - name: Ensure {{ duplicacy_autobackup_token_file_path }}
-  ansible.builtin.template_file:
+  ansible.builtin.file:
     path: "{{ duplicacy_autobackup_token_file_path }}"
     state: directory
+    mode: o-rx
 
 ...
