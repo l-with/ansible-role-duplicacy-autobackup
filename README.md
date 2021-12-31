@@ -11,7 +11,7 @@ install duplicacy autobackup via https://github.com/christophetd/duplicacy-autob
 | basics | duplicacy_autobackup_container_name | `duplicacy-autobackup` | the name for duplicacy autobackup container |
 | backup | duplicacy_autobackup_backup_name | | the value for `BACKUP_NAME`, e.g. the name of the backup |
 | backup | duplicacy_autobackup_backup_data | | the path to mount as `data`, e.g. the directory to backup |
-| backup | duplicacy_autobackup_backup_encryption_key | | the value for `BACKUP_ENCRYPTION_KEY`, e.g.  the optional passphrase to encrypt teh backups with before they are stored remotely |
+| backup | duplicacy_autobackup_backup_encryption_key | | the value for `BACKUP_ENCRYPTION_KEY`, e.g.  the passphrase to encrypt teh backups with before they are stored remotely |
 | backup | duplicacy_autobackup_backup_location | | the value for `BACKUP_LOCATION`, e.g. the [Duplicacy URI](https://github.com/gilbertchen/duplicacy/wiki/Storage-Backends) of where to store the backups |
 | backup | duplicacy_autobackup_storage_backend | | the storage backend, possible values are  <br /><ol><li>`Local disk`</li><li>`Backblaze B2`</li><li>`SSH/SFTP Password`</li><li>`SSH/SFTP Keyfile`</li><li>`Onedrive`</li></ol> |
 | backup | duplicacy_autobackup_token_file_path | `/srv/duplicacy-autobackup/token` | the path where the token files are created |
@@ -21,7 +21,7 @@ install duplicacy autobackup via https://github.com/christophetd/duplicacy-autob
 | backup | duplicacy_autobackup_b2_key | | the value for `B2_KEY` |
 | backup | duplicacy_autobackup_ssh_key_file_name | | the filename for the ssh key file |
 | backup | duplicacy_autobackup_ssh_key_file_content | | the content for `duplicacy_autobackup_ssh_key_file_name` |
-| backup | duplicacy_autobackup_backup_immediately | `no` | the value for `BACKUP_IMMEDIATELY`, e.g.  if a backup should be performed immediately after the container is started |
+| backup | duplicacy_autobackup_backup_immediately | `'no'` | the value for `BACKUP_IMMEDIATELY`, e.g. if a backup should be performed immediately after the container is started (`'yes'` or `'no'`) |
 | backup | duplicacy_autobackup_backup_schedule | `0 1 * * *` | the value for `BACKUP_SCHEDULE`, e.g. cron-like string to define the frequency at which backups should be made (e.g. 0 2 * * * for Every day at 2am). Note that this string should be indicated in the UTC timezone. |
 | backup | duplicati_autobackup_scriptfile_path | `/srv/duplicacy-autobackup/scripts` | the path where the scripts are create |
 | backup | duplicacy_autobackup_pre_backup_script_file_name | `pre-backup.sh` | the filename for the pre backum script |
