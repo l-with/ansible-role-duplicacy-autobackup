@@ -1,0 +1,14 @@
+fileignoreconfig:
+- filename: tasks/main_ssh_sftp_keyfile.yml
+  allowed_patterns:
+  - >
+    BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
+  - >
+    SSH_KEY_FILE: "\/srv\/\{\{ duplicacy_autobackup_ssh_key_file_name \}\}"
+
+- filename: README.md
+  allowed_patterns:
+  - >
+    SSH\/SFTP Keyfile
+  - >
+    SSH\/SFTP Password
