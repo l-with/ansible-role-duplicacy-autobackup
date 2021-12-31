@@ -1,0 +1,16 @@
+---
+
+- hosts: localhost
+  roles:
+    - role: ../../ansible-role-duplicacy-autobackup
+      vars:
+        duplicati_autobackup_script_file_path: "{{ playbook_dir }}/.srv"
+        duplicacy_autobackup_backup_name: "duplicacy-backup"
+        duplicacy_autobackup_backup_location: "{{ playbook_dir }}/.backup"
+        duplicacy_autobackup_backup_encryption_key: encryption_key
+        duplicacy_autobackup_backup_data: "{{ playbook_dir }}/data"
+        duplicacy_autobackup_backup_immediately: 'yes'
+        # duplicacy_autobackup_storage_backend: 'xyzzy'
+        duplicacy_autobackup_storage_backend: 'Local disk'
+
+...

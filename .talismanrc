@@ -30,3 +30,8 @@ fileignoreconfig:
 
 - filename: templates/pre-backup.sh.j2
   ignore_detectors: [filename]
+
+- filename: test/playbook.yml
+  allowed_patterns:
+  - >
+    duplicacy_autobackup_backup_encryption_key: encryption_key
