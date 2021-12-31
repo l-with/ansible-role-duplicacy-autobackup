@@ -12,3 +12,6 @@ fileignoreconfig:
     SSH\/SFTP Keyfile.*
   - >
     SSH\/SFTP Password.*
+
+- filename: templates/post-backup.sh.j2
+  ignore_detectors: [filename]
