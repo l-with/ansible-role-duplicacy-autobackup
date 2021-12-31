@@ -26,6 +26,8 @@
       ONEDRIVE_TOKEN_FILE: "/srv/{{ duplicacy_autobackup_onedrive_token_file_name }}"
     volumes:
       - "{{ duplicacy_autobackup_backup_data }}:/data"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}:/scripts/pre-backup.sh"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}:/scripts/post-backup.sh"
       - "{{ duplicacy_autobackup_token_file_path }}/{{ duplicacy_autobackup_onedrive_token_file_name }}:/srv/{{ duplicacy_autobackup_onedrive_token_file_name }}"
 
 ...
