@@ -21,6 +21,7 @@
       BACKUP_SCHEDULE: "{{ duplicacy_autobackup_backup_schedule }}"
       BACKUP_ENCRYPTION_KEY: "{{ duplicacy_autobackup_backup_encryption_key }}"
       BACKUP_IMMEDIATELY: "{{ duplicacy_autobackup_backup_immediately }}"
+      DUPLICACY_INIT_OPTIONS: "{{ duplicacy_autobackup_duplicacy_init_options }}"
       DUPLICACY_PRUNE_OPTIONS: "{{ duplicacy_autobackup_prune_options }}"
       PRUNE_SCHEDULE: "{{ duplicacy_autobackup_prune_schedule }}"
       SSH_KEY_FILE: "/srv/{{ duplicacy_autobackup_ssh_key_file_name }}"
