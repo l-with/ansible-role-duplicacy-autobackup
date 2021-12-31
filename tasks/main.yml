@@ -23,7 +23,7 @@
     mode: ug+x,o-rx
   when: duplicacy_autobackup_post_backup_script_file_content is defined
 
-- name: Include storage provider specific task
-  include_tasks: "main_{{ duplicacy_autobackup_storage_provider | regex_replace('[ /]', '_') | regex_replace('[()]', '') | lower }}.yml"
+- name: Include storage backend specific task
+  include_tasks: "storage_backend_{{ duplicacy_autobackup_storage_backend | regex_replace('[ /]', '_') | regex_replace('[()]', '') | lower }}.yml"
 
 ...
