@@ -1,29 +1,38 @@
 fileignoreconfig:
-- filename: tasks/main_ssh_sftp_keyfile.yml
-  allowed_patterns:
-  - >
-    BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
-  - >
-    SSH_KEY_FILE: "\/srv\/\{\{ duplicacy_autobackup_ssh_key_file_name \}\}"
 
-- filename: tasks/storage_backend_blackblaze_b2.yml
+- filename: tasks/main_ssh_sftp_keyfile.yml
+  checksum: f8b631636add3de3003e81deb4afd00869b269ea99e77d82b31704085fc152f1
+
+- filename: tasks/main.yml
+  checksum: 7f752466a44d70b917ebe6afa387fe325bf20a64ef36b35b4aed102d8528788b
   allowed_patterns:
   - >
     BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
   - >
     B2_KEY: "\{\{ duplicacy_autobackup_b2_key \}\}"
-
-- filename: tasks/storage_backend_local_disk.yml
-  allowed_patterns:
   - >
-    BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
+    SSH_KEY_FILE: "/srv/{{ duplicacy_autobackup_ssh_key_file_name }}"
+  - >
+    SSH_PASSPHRASE: "{{ duplicacy_autobackup_ssh_passphrase }}"
+  - >
+    \[ duplicacy_autobackup_secret_file_path\+'/'\+duplicacy_autobackup_ssh_key_file_name\+':/srv/'\+duplicacy_autobackup_ssh_key_file_name \] }}"
+  - >
+    _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_onedrive_token_file_name }}"
+  - >
+    _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_ssh_key_file_name }}"
+  - >
+    \[ duplicacy_autobackup_secret_file_path\+'/'\+duplicacy_autobackup_onedrive_token_file_name\+':/srv/'\+duplicacy_autobackup_onedrive_token_file_name \] }}"
 
 - filename: README.md
   allowed_patterns:
-  - >
-    SSH\/SFTP Keyfile.*
-  - >
-    SSH\/SFTP Password.*
+  - SSH\/SFTP Keyfile
+  - SSH\/SFTP Password
+  - backup
+  - secret
+  - key
+  - password
+  - passphrase
+  - pass
 
 - filename: templates/post-backup.sh.j2
   ignore_detectors: [filename]
@@ -32,6 +41,16 @@ fileignoreconfig:
   ignore_detectors: [filename]
 
 - filename: test/playbook.yml
+  checksum: 59f7703d2a85053ffccd44f14ee8ef447669d3a6bedbb683c43d11695ea61d0a
   allowed_patterns:
   - >
     duplicacy_autobackup_backup_encryption_key: encryption_key
+  - >
+    duplicati_autobackup_script_file_path\: \"\{\{ playbook_dir \}\}\/.srv-ssh_key\"
+  - >
+    duplicacy_autobackup_secret_file_path\: \"\{\{ playbook_dir \}\}\/.secret\"
+
+- filename: defaults/main.yml
+  allowed_patterns:
+  - >
+    duplicacy_autobackup_secret_file_path: '/srv/duplicacy-autobackup/secret'

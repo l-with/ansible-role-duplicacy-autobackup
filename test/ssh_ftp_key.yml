@@ -1,0 +1,7 @@
+---
+
+duplicacy_autobackup_secret_file_content:
+duplicacy_autobackup_ssh_passphrase:
+duplicacy_autobackup_backup_location:
+
+...

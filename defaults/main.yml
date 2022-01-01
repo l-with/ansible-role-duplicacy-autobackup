@@ -4,9 +4,11 @@ duplicacy_autobackup_image: 'ghcr.io/christophetd/duplicacy-autobackup'
 duplicacy_autobackup_image_tag: 'v1.5.0'  # for v1.60 s. https://github.com/christophetd/duplicacy-autobackup/issues/40
 duplicacy_autobackup_container_name: 'duplicacy-autobackup'
 duplicacy_autobackup_duplicacy_init_options: ''
+duplicacy_autobackup_duplicacy_backup_options: ''
 duplicacy_autobackup_repository: "{{ duplicacy_autobackup_working_directory }}"
-duplicacy_autobackup_token_file_path: '/srv/duplicacy-autobackup/token'
+duplicacy_autobackup_secret_file_path: '/srv/duplicacy-autobackup/secret'
 duplicacy_autobackup_onedrive_token_file_name: 'one-token.json'
+duplicacy_autobackup_ssh_key_file_name: 'id'
 duplicacy_autobackup_backup_immediately: 'no'
 duplicacy_autobackup_backup_schedule: '0 1 * * *'
 duplicati_autobackup_script_file_path: '/srv/duplicacy-autobackup/scripts'
@@ -17,7 +19,7 @@ duplicacy_autobackup_prune_schedule: '0 4 * * *'
 
 duplicacy_autobackup_storage_backends:
   - 'Local disk'
-  - 'Backblaze B2'
+  - 'Blackblaze B2'
   - 'SSH/SFTP Password'
   - 'SSH/SFTP Keyfile'
   - 'Onedrive'
