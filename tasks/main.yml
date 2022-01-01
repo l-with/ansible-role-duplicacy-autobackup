@@ -41,11 +41,36 @@
       DUPLICACY_PRUNE_OPTIONS: "{{ duplicacy_autobackup_prune_options }}"
       PRUNE_SCHEDULE: "{{ duplicacy_autobackup_prune_schedule }}"
 
+- name: Set _duplicacy_autobackup_container_volumes_general
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_container_volumes_general:
+      - "{{ duplicacy_autobackup_working_directory }}:/data"
+      - "{{ duplicacy_autobackup_repository }}:/repository"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}:/scripts/pre-backup.sh"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}:/scripts/post-backup.sh"
+
 - name: Set _duplicacy_autobackup_container_env_special for 'Local disk'
   ansible.builtin.set_fact:
     _duplicacy_autobackup_container_env_special:
       BACKUP_LOCATION: /backup
   when: duplicacy_autobackup_storage_backend == 'Local disk'
+
+- name: Set fact _duplicacy_autobackup_container_volumes_special
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_container_volumes_special: []
+
+- name: Set _duplicacy_autobackup_container_volumes_special for 'Local disk'
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special + 
+      [ duplicacy_autobackup_backup_location+':/backup'] }}"
+  when: duplicacy_autobackup_storage_backend == 'Local disk'
+
+- name: Set _duplicacy_autobackup_container_env_special for 'Blackblaze B2'
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_container_env_special:
+      B2_ID: "{{ duplicacy_autobackup_b2_id }}"
+      B2_KEY: "{{ duplicacy_autobackup_b2_key }}"
+  when: duplicacy_autobackup_storage_backend == 'Blackblaze B2'
 
 - name: Ensure docker container {{ _duplicacy_autobackup_image }}
   community.docker.docker_container:
@@ -54,12 +79,7 @@
     restart_policy: always
     container_default_behavior: compatibility
     env: "{{ _duplicacy_autobackup_container_env_general | combine(_duplicacy_autobackup_container_env_special) }}"
-    volumes:
-      - "{{ duplicacy_autobackup_backup_location }}:/backup"
-      - "{{ duplicacy_autobackup_working_directory }}:/data"
-      - "{{ duplicacy_autobackup_repository }}:/repository"
-      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}:/scripts/pre-backup.sh"
-      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}:/scripts/post-backup.sh"
+    volumes: "{{ _duplicacy_autobackup_container_volumes_general +_duplicacy_autobackup_container_volumes_special }}"
 
 # - name: Include storage backend specific task
 #   include_tasks: "storage_backend_{{ duplicacy_autobackup_storage_backend | regex_replace('[ /]', '_') | regex_replace('[()]', '') | lower }}.yml"
