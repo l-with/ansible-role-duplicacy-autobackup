@@ -31,4 +31,4 @@ fileignoreconfig:
 - filename: defaults/main.yml
   allowed_patterns:
   - >
-    duplicacy_autobackup_secrets_file_path: '/srv/duplicacy-autobackup/secrets'
+    duplicacy_autobackup_secret_file_path: '/srv/duplicacy-autobackup/secret'
