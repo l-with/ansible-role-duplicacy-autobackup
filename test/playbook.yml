@@ -13,13 +13,13 @@
       name: ../../ansible-role-duplicacy-autobackup
     vars:
       duplicacy_autobackup_container_name: duplicacy-local
-      duplicati_autobackup_script_file_path: "{{ playbook_dir }}/.srv-local"
+      duplicati_autobackup_script_file_path: "{{ playbook_dir }}/.srv-ni"
       duplicacy_autobackup_backup_name: "duplicacy-backup"
       duplicacy_autobackup_backup_location: "{{ playbook_dir }}/.backup"
       duplicacy_autobackup_repository: "{{ playbook_dir }}/repository"
       duplicacy_autobackup_duplicacy_init_options: '-repository /repository'
       duplicacy_autobackup_backup_encryption_key: encryption_key
-      duplicacy_autobackup_working_directory: "{{ playbook_dir }}/data"
+      duplicacy_autobackup_working_directory: "{{ playbook_dir }}/.data-ni"
       duplicacy_autobackup_backup_immediately: 'yes'
       duplicacy_autobackup_storage_backend: 'Not implemented'
     when: test_backend ==  'Not implemented'
@@ -35,7 +35,7 @@
       duplicacy_autobackup_repository: "{{ playbook_dir }}/repository"
       duplicacy_autobackup_duplicacy_init_options: '-repository /repository'
       duplicacy_autobackup_backup_encryption_key: encryption_key
-      duplicacy_autobackup_working_directory: "{{ playbook_dir }}/data"
+      duplicacy_autobackup_working_directory: "{{ playbook_dir }}/.data-local"
       duplicacy_autobackup_backup_immediately: 'yes'
       duplicacy_autobackup_storage_backend: 'Local disk'
     when: test_backend == 'Local disk'
