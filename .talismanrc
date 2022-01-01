@@ -4,6 +4,7 @@ fileignoreconfig:
   checksum: f8b631636add3de3003e81deb4afd00869b269ea99e77d82b31704085fc152f1
 
 - filename: tasks/main.yml
+  checksum: 7f752466a44d70b917ebe6afa387fe325bf20a64ef36b35b4aed102d8528788b
   allowed_patterns:
   - >
     BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
