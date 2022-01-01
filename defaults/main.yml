@@ -17,7 +17,7 @@ duplicacy_autobackup_prune_schedule: '0 4 * * *'
 
 duplicacy_autobackup_storage_backends:
   - 'Local disk'
-  - 'Backblaze B2'
+  - 'Blackblaze B2'
   - 'SSH/SFTP Password'
   - 'SSH/SFTP Keyfile'
   - 'Onedrive'
