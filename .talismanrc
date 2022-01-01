@@ -1,7 +1,9 @@
 fileignoreconfig:
 
-- filename: tasks/main_ssh_sftp_keyfile.yml
-  checksum: f8b631636add3de3003e81deb4afd00869b269ea99e77d82b31704085fc152f1
+- filename: defaults/main.yml
+  allowed_patterns:
+  - >
+    duplicacy_autobackup_secret_file_path: '/srv/duplicacy-autobackup/secret'
 
 - filename: tasks/main.yml
   checksum: 7f752466a44d70b917ebe6afa387fe325bf20a64ef36b35b4aed102d8528788b
@@ -15,6 +17,8 @@ fileignoreconfig:
   - >
     SSH_PASSPHRASE: "{{ duplicacy_autobackup_ssh_passphrase }}"
   - >
+    SSH_PASSWORD: "{{ duplicacy_autobackup_ssh_password }}"
+  - >
     \[ duplicacy_autobackup_secret_file_path\+'/'\+duplicacy_autobackup_ssh_key_file_name\+':/srv/'\+duplicacy_autobackup_ssh_key_file_name \] }}"
   - >
     _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_onedrive_token_file_name }}"
@@ -22,6 +26,9 @@ fileignoreconfig:
     _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_ssh_key_file_name }}"
   - >
     \[ duplicacy_autobackup_secret_file_path\+'/'\+duplicacy_autobackup_onedrive_token_file_name\+':/srv/'\+duplicacy_autobackup_onedrive_token_file_name \] }}"
+
+- filename: tasks/main_ssh_sftp_keyfile.yml
+  checksum: f8b631636add3de3003e81deb4afd00869b269ea99e77d82b31704085fc152f1
 
 - filename: README.md
   allowed_patterns:
@@ -50,7 +57,5 @@ fileignoreconfig:
   - >
     duplicacy_autobackup_secret_file_path\: \"\{\{ playbook_dir \}\}\/.secret\"
 
-- filename: defaults/main.yml
-  allowed_patterns:
-  - >
-    duplicacy_autobackup_secret_file_path: '/srv/duplicacy-autobackup/secret'
+- filename: test/ssh_sftp_password.yml
+  ignore_detectors: [filename]

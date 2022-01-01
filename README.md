@@ -41,6 +41,7 @@ This role can be tested by
 ansible-playbook test/playbook.yml -e "test_backend='Not implemented'"
 ansible-playbook test/playbook.yml -e "test_backend='Local disk'"
 ansible-playbook test/playbook.yml -e "test_backend='Blackblaze B2'" -e@test/.blackblaze_b2.yml
+ansible-playbook test/playbook.yml -e "test_backend='SSH/SFTP Password'" -e@test/.ssh_sftp_password.yml
+ansible-playbook test/playbook.yml -e "test_backend='SSH/SFTP Keyfile'" -e@test/.ssh_sftp_key.yml
 ansible-playbook test/playbook.yml -e "test_backend='Onedrive'" -e@test/.onedrive.yml
-ansible-playbook test/playbook.yml -e "test_backend='SSH/SFTP Keyfile'" -e@test/.ssh_ftp_key.yml
 ```

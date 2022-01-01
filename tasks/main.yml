@@ -72,22 +72,13 @@
         B2_KEY: "{{ duplicacy_autobackup_b2_key }}"
   when: duplicacy_autobackup_storage_backend == 'Blackblaze B2'
 
-- name: Set specials for 'Onedrive'
+- name: Set specials for 'SSH/SFTP Password'
   block:
-  - name: Set _duplicacy_autobackup_container_env_special for 'Onedrive'
+  - name: Set _duplicacy_autobackup_container_env_special for 'SSH/SFTP Password'
     ansible.builtin.set_fact:
       _duplicacy_autobackup_container_env_special:
-        ONEDRIVE_TOKEN_FILE: "/srv/{{ duplicacy_autobackup_onedrive_token_file_name }}"
-
-  - name: Set _duplicacy_autobackup_container_volumes_special for 'Onedrive'
-    ansible.builtin.set_fact:
-      _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
-        [ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_onedrive_token_file_name+':/srv/'+duplicacy_autobackup_onedrive_token_file_name ] }}"
-
-  - name: Set _duplicacy_autobackup_secret_file_name for 'Onedrive'
-    ansible.builtin.set_fact:
-      _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_onedrive_token_file_name }}"
-  when: duplicacy_autobackup_storage_backend == 'Onedrive'
+        SSH_PASSWORD: "{{ duplicacy_autobackup_ssh_password }}"
+  when: duplicacy_autobackup_storage_backend == 'SSH/SFTP Password'
 
 - name: Set specials for 'SSH/SFTP Keyfile'
   block:
@@ -106,6 +97,23 @@
     ansible.builtin.set_fact:
       _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_ssh_key_file_name }}"
   when: duplicacy_autobackup_storage_backend == 'SSH/SFTP Keyfile'
+
+- name: Set specials for 'Onedrive'
+  block:
+  - name: Set _duplicacy_autobackup_container_env_special for 'Onedrive'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_container_env_special:
+        ONEDRIVE_TOKEN_FILE: "/srv/{{ duplicacy_autobackup_onedrive_token_file_name }}"
+
+  - name: Set _duplicacy_autobackup_container_volumes_special for 'Onedrive'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
+        [ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_onedrive_token_file_name+':/srv/'+duplicacy_autobackup_onedrive_token_file_name ] }}"
+
+  - name: Set _duplicacy_autobackup_secret_file_name for 'Onedrive'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_onedrive_token_file_name }}"
+  when: duplicacy_autobackup_storage_backend == 'Onedrive'
 
 - name: Include secret file tasks for 'Onedrive', 'SSH/SFTP Keyfile'
   include_tasks: secret_file.yml
