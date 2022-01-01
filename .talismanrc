@@ -15,13 +15,23 @@ fileignoreconfig:
     SSH_PASSPHRASE\: "{{ duplicacy_autobackup_ssh_passphrase }}"
   - >
     \[ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_ssh_key_file_name+':/srv/'+duplicacy_autobackup_ssh_key_file_name \] \}\}"
+  - >
+    _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_onedrive_token_file_name }}"
+  - >
+    _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_ssh_key_file_name }}"
+  - >
+    \[ duplicacy_autobackup_secret_file_path\+'/'\+duplicacy_autobackup_onedrive_token_file_name\+':/srv/'\+duplicacy_autobackup_onedrive_token_file_name \] }}"
 
 - filename: README.md
   allowed_patterns:
-  - >
-    SSH\/SFTP Keyfile.*
-  - >
-    SSH\/SFTP Password.*
+  - SSH\/SFTP Keyfile
+  - SSH\/SFTP Password
+  - backup
+  - secret
+  - key
+  - password
+  - passphrase
+  - pass
 
 - filename: templates/post-backup.sh.j2
   ignore_detectors: [filename]
@@ -36,7 +46,8 @@ fileignoreconfig:
     duplicacy_autobackup_backup_encryption_key: encryption_key
   - >
     duplicati_autobackup_script_file_path\: \"\{\{ playbook_dir \}\}\/.srv-ssh_key\"
-
+  - >
+    duplicacy_autobackup_secret_file_path\: \"\{\{ playbook_dir \}\}\/.secret\"
 
 - filename: defaults/main.yml
   allowed_patterns:
