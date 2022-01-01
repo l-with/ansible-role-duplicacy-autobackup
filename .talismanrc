@@ -11,10 +11,11 @@ fileignoreconfig:
   - >
     B2_KEY: "\{\{ duplicacy_autobackup_b2_key \}\}"
   - >
-    SSH_KEY_FILE\: \"\/srv\/\{\{ duplicacy_autobackup_ssh_key_file_name \}\}\"
-    SSH_PASSPHRASE\: "{{ duplicacy_autobackup_ssh_passphrase }}"
+    SSH_KEY_FILE: "/srv/{{ duplicacy_autobackup_ssh_key_file_name }}"
   - >
-    \[ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_ssh_key_file_name+':/srv/'+duplicacy_autobackup_ssh_key_file_name \] \}\}"
+    SSH_PASSPHRASE: "{{ duplicacy_autobackup_ssh_passphrase }}"
+  - >
+    \[ duplicacy_autobackup_secret_file_path\+'/'\+duplicacy_autobackup_ssh_key_file_name\+':/srv/'\+duplicacy_autobackup_ssh_key_file_name \] }}"
   - >
     _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_onedrive_token_file_name }}"
   - >
