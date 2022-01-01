@@ -55,6 +55,22 @@
       duplicacy_autobackup_storage_backend: 'Blackblaze B2'
     when: test_backend == 'Blackblaze B2'
 
+  - name: Onedrive Keyfile
+    ansible.builtin.include_role:
+      name: ../../ansible-role-duplicacy-autobackup
+    vars:
+      duplicacy_autobackup_container_name: duplicacy-onedrive
+      duplicati_autobackup_script_file_path: "{{ playbook_dir }}/.srv-onedrive"
+      duplicacy_autobackup_backup_name: "duplicacy-backup"
+      duplicacy_autobackup_repository: "{{ playbook_dir }}/repository"
+      duplicacy_autobackup_duplicacy_init_options: '-repository /repository'
+      duplicacy_autobackup_backup_encryption_key: encryption_key
+      duplicacy_autobackup_working_directory: "{{ playbook_dir }}/.data-onedrive"
+      duplicacy_autobackup_backup_immediately: 'yes'
+      duplicacy_autobackup_storage_backend: 'Onedrive'
+      duplicacy_autobackup_secret_file_path: "{{ playbook_dir }}/.secret"
+    when: test_backend == 'Onedrive'
+
   - name: SSH/SFTP Keyfile
     ansible.builtin.include_role:
       name: ../../ansible-role-duplicacy-autobackup
