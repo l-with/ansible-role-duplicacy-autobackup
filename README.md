@@ -21,8 +21,8 @@ install duplicacy autobackup via https://github.com/christophetd/duplicacy-autob
 | backup | duplicacy_autobackup_onedrive_token_file_content | | the content for `ONEDRIVE_TOKEN_FILE` |
 | backup | duplicacy_autobackup_b2_id | | the value for `B2_ID` |
 | backup | duplicacy_autobackup_b2_key | | the value for `B2_KEY` |
-| backup | duplicacy_autobackup_ssh_key_file_name | `id` | the filename for the ssh key file |
-| backup | duplicacy_autobackup_ssh_key_file_content | | the content for `duplicacy_autobackup_ssh_key_file_name` |
+| backup | duplicacy_autobackup_secret_file_name | `id` | the filename for the secret file |
+| backup | duplicacy_autobackup_secret_file_content | | the content for `duplicacy_autobackup_ssh_key_file_name` |
 | backup | duplicacy_autobackup_backup_immediately | `'no'` | the value for `BACKUP_IMMEDIATELY`, e.g. if a backup should be performed immediately after the container is started (`'yes'` or `'no'`) |
 | backup | duplicacy_autobackup_backup_schedule | `0 1 * * *` | the value for `BACKUP_SCHEDULE`, e.g. cron-like string to define the frequency at which backups should be made (e.g. 0 2 * * * for Every day at 2am). Note that this string should be indicated in the UTC timezone. |
 | backup | duplicati_autobackup_scriptfile_path | `/srv/duplicacy-autobackup/scripts` | the path where the scripts are create |
@@ -40,4 +40,5 @@ This role can be tested by
 ansible-playbook test/playbook.yml -e "test_backend='Not implemented'"
 ansible-playbook test/playbook.yml -e "test_backend='Local disk'"
 ansible-playbook test/playbook.yml -e "test_backend='Blackblaze B2'" -e@test/.blackblaze_b2.yml
+ansible-playbook test/playbook.yml -e "test_backend='SSH/SFTP Keyfile'" -e@test/.ssh_ftp_key.yml
 ```
