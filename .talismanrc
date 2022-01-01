@@ -9,6 +9,11 @@ fileignoreconfig:
     BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
   - >
     B2_KEY: "\{\{ duplicacy_autobackup_b2_key \}\}"
+  - >
+    SSH_KEY_FILE: "\/srv\/\{\{ duplicacy_autobackup_ssh_key_file_name \}\}"
+    SSH_PASSPHRASE: "\{\{ duplicacy_autobackup_ssh_passphrase \}\}"
+  - >
+    \[ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_ssh_key_file_name+':/srv/'+duplicacy_autobackup_ssh_key_file_name \] \}\}"
 
 - filename: README.md
   allowed_patterns:
