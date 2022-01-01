@@ -45,3 +45,5 @@ ansible-playbook test/playbook.yml -e "test_backend='SSH/SFTP Password'" -e@test
 ansible-playbook test/playbook.yml -e "test_backend='SSH/SFTP Keyfile'" -e@test/.ssh_sftp_key.yml
 ansible-playbook test/playbook.yml -e "test_backend='Onedrive'" -e@test/.onedrive.yml
 ```
+
+The files `test/.<storage>.yml` should contain and set the variables of `test/<storage>.yml`.
