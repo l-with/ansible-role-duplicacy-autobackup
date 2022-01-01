@@ -38,6 +38,7 @@
       BACKUP_ENCRYPTION_KEY: "{{ duplicacy_autobackup_backup_encryption_key }}"
       BACKUP_IMMEDIATELY: "{{ duplicacy_autobackup_backup_immediately }}"
       DUPLICACY_INIT_OPTIONS: "{{ duplicacy_autobackup_duplicacy_init_options }}"
+      DUPLICACY_BACKUP_OPTIONS: "{{ duplicacy_autobackup_duplicacy_backup_options }}"
       DUPLICACY_PRUNE_OPTIONS: "{{ duplicacy_autobackup_prune_options }}"
       PRUNE_SCHEDULE: "{{ duplicacy_autobackup_prune_schedule }}"
 
@@ -61,8 +62,8 @@
 
 - name: Set _duplicacy_autobackup_container_volumes_special for 'Local disk'
   ansible.builtin.set_fact:
-    _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special + 
-      [ duplicacy_autobackup_backup_location+':/backup'] }}"
+    _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
+      [ duplicacy_autobackup_backup_location+':/backup' ] }}"
   when: duplicacy_autobackup_storage_backend == 'Local disk'
 
 - name: Set _duplicacy_autobackup_container_env_special for 'Blackblaze B2'
@@ -71,6 +72,28 @@
       B2_ID: "{{ duplicacy_autobackup_b2_id }}"
       B2_KEY: "{{ duplicacy_autobackup_b2_key }}"
   when: duplicacy_autobackup_storage_backend == 'Blackblaze B2'
+
+- name: Set _duplicacy_autobackup_container_env_special for 'SSH/SFTP Keyfile'
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_container_env_special:
+      SSH_KEY_FILE: "/srv/{{ duplicacy_autobackup_ssh_key_file_name }}"
+      SSH_PASSPHRASE: "{{ duplicacy_autobackup_ssh_passphrase }}"
+  when: duplicacy_autobackup_storage_backend == 'SSH/SFTP Keyfile'
+
+- name: Set _duplicacy_autobackup_container_volumes_special for 'SSH/SFTP Keyfile'
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
+      [ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_ssh_key_file_name+':/srv/'+duplicacy_autobackup_ssh_key_file_name ] }}"
+  when: duplicacy_autobackup_storage_backend == 'SSH/SFTP Keyfile'
+
+- name: Set _duplicacy_autobackup_secret_file_name for 'SSH/SFTP Keyfile'
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_secret_file_name: 'id'
+  when: duplicacy_autobackup_storage_backend == 'SSH/SFTP Keyfile'
+
+- name: Include secret file tasks for 'SSH/SFTP Keyfile'
+  include_tasks: secret_file.yml
+  when: duplicacy_autobackup_storage_backend == 'SSH/SFTP Keyfile'
 
 - name: Ensure docker container {{ _duplicacy_autobackup_image }}
   community.docker.docker_container:
