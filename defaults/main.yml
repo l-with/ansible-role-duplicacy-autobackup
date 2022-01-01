@@ -5,8 +5,9 @@ duplicacy_autobackup_image_tag: 'v1.5.0'  # for v1.60 s. https://github.com/chri
 duplicacy_autobackup_container_name: 'duplicacy-autobackup'
 duplicacy_autobackup_duplicacy_init_options: ''
 duplicacy_autobackup_repository: "{{ duplicacy_autobackup_working_directory }}"
-duplicacy_autobackup_token_file_path: '/srv/duplicacy-autobackup/token'
+duplicacy_autobackup_secrets_file_path: '/srv/duplicacy-autobackup/secrets'
 duplicacy_autobackup_onedrive_token_file_name: 'one-token.json'
+duplicacy_autobackup_ssh_key_file_name: 'id'
 duplicacy_autobackup_backup_immediately: 'no'
 duplicacy_autobackup_backup_schedule: '0 1 * * *'
 duplicati_autobackup_script_file_path: '/srv/duplicacy-autobackup/scripts'

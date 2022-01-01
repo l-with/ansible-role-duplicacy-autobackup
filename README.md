@@ -16,12 +16,12 @@ install duplicacy autobackup via https://github.com/christophetd/duplicacy-autob
 | backup | duplicacy_autobackup_storage_backend | | the storage backend, possible values are  <br /><ol><li>`Local disk`</li><li>`Backblaze B2`</li><li>`SSH/SFTP Password`</li><li>`SSH/SFTP Keyfile`</li><li>`Onedrive`</li></ol> |
 | backup | duplicacy_autobackup_duplicacy_init_options | `''` | the value for `DUPLICACY_INIT_OPTIONS`, e.g. the options for `duplicacy init` |
 | backup | duplicacy_autobackup_repository | `"{{ duplicacy_autobackup_working_directory }}"` | the path mounted as `/repository` for possible use in `duplicacy_autobackup_duplicacy_init_options` |
-| backup | duplicacy_autobackup_token_file_path | `/srv/duplicacy-autobackup/token` | the path where the token files are created |
+| backup | duplicacy_autobackup_secrets_file_path | `/srv/duplicacy-autobackup/secrets` | the path where the token and the ssh-key files are created |
 | backup | duplicacy_autobackup_onedrive_token_file_name | `one-token.json`| the filename for `ONEDRIVE_TOKEN_FILE` |
 | backup | duplicacy_autobackup_onedrive_token_file_content | | the content for `ONEDRIVE_TOKEN_FILE` |
 | backup | duplicacy_autobackup_b2_id | | the value for `B2_ID` |
 | backup | duplicacy_autobackup_b2_key | | the value for `B2_KEY` |
-| backup | duplicacy_autobackup_ssh_key_file_name | | the filename for the ssh key file |
+| backup | duplicacy_autobackup_ssh_key_file_name | `id` | the filename for the ssh key file |
 | backup | duplicacy_autobackup_ssh_key_file_content | | the content for `duplicacy_autobackup_ssh_key_file_name` |
 | backup | duplicacy_autobackup_backup_immediately | `'no'` | the value for `BACKUP_IMMEDIATELY`, e.g. if a backup should be performed immediately after the container is started (`'yes'` or `'no'`) |
 | backup | duplicacy_autobackup_backup_schedule | `0 1 * * *` | the value for `BACKUP_SCHEDULE`, e.g. cron-like string to define the frequency at which backups should be made (e.g. 0 2 * * * for Every day at 2am). Note that this string should be indicated in the UTC timezone. |
