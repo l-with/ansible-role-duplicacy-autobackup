@@ -19,6 +19,7 @@ install duplicacy autobackup via https://github.com/christophetd/duplicacy-autob
 | backup | duplicacy_autobackup_secrets_file_path | `/srv/duplicacy-autobackup/secrets` | the path where the token and the ssh-key files are created |
 | backup | duplicacy_autobackup_secret_file_name | it depends on `duplicacy_autobackup_storage_backend` | the filename for the secret file, the default is <br /><ol><li>`Local disk`</li><li>`Backblaze B2`</li><li>`SSH/SFTP Password`</li><li>`SSH/SFTP Keyfile`<br />`{{ duplicacy_autobackup_ssh_key_file_name }}`</li><li>`Onedrive`<br />`{{ duplicacy_autobackup_onedrive_token_file_name }}`</li></ol> |
 | backup | duplicacy_autobackup_secret_file_content | | the content for `duplicacy_autobackup_secret_file_name` |
+| backup | duplicacy_autobackup_secret_file_force | `false` | if the templating of the secret file willl be forced, even if the secret file exists |
 | backup | duplicacy_autobackup_onedrive_token_file_name | `one-token.json`| the filename for `ONEDRIVE_TOKEN_FILE` |
 | backup | duplicacy_autobackup_ssh_key_file_name | `id` | the filename for `SSH_KEY_FILE` |
 | backup | duplicacy_autobackup_b2_id | | the value for `B2_ID` |

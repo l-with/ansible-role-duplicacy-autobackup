@@ -7,6 +7,7 @@ duplicacy_autobackup_duplicacy_init_options: ''
 duplicacy_autobackup_duplicacy_backup_options: ''
 duplicacy_autobackup_repository: "{{ duplicacy_autobackup_working_directory }}"
 duplicacy_autobackup_secret_file_path: '/srv/duplicacy-autobackup/secret'
+duplicacy_autobackup_secret_file_force: false
 duplicacy_autobackup_onedrive_token_file_name: 'one-token.json'
 duplicacy_autobackup_ssh_key_file_name: 'id'
 duplicacy_autobackup_backup_immediately: 'no'
