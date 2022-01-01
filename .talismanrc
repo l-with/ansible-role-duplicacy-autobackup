@@ -1,10 +1,7 @@
 fileignoreconfig:
+
 - filename: tasks/main_ssh_sftp_keyfile.yml
-  allowed_patterns:
-  - >
-    BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
-  - >
-    SSH_KEY_FILE: "\/srv\/\{\{ duplicacy_autobackup_ssh_key_file_name \}\}"
+  checksum: f8b631636add3de3003e81deb4afd00869b269ea99e77d82b31704085fc152f1
 
 - filename: tasks/main.yml
   allowed_patterns:
@@ -30,3 +27,8 @@ fileignoreconfig:
   allowed_patterns:
   - >
     duplicacy_autobackup_backup_encryption_key: encryption_key
+
+- filename: defaults/main.yml
+  allowed_patterns:
+  - >
+    duplicacy_autobackup_secrets_file_path: '/srv/duplicacy-autobackup/secrets'
