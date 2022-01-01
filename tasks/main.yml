@@ -29,7 +29,39 @@
     mode: ug+x,o-rx
   when: duplicacy_autobackup_post_backup_script_file_content is defined
 
-- name: Include storage backend specific task
-  include_tasks: "storage_backend_{{ duplicacy_autobackup_storage_backend | regex_replace('[ /]', '_') | regex_replace('[()]', '') | lower }}.yml"
+- name: Set _duplicacy_autobackup_container_env_general
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_container_env_general:
+      BACKUP_NAME: "{{ duplicacy_autobackup_backup_name }}"
+      BACKUP_LOCATION: "{{ duplicacy_autobackup_backup_location }}"
+      BACKUP_SCHEDULE: "{{ duplicacy_autobackup_backup_schedule }}"
+      BACKUP_ENCRYPTION_KEY: "{{ duplicacy_autobackup_backup_encryption_key }}"
+      BACKUP_IMMEDIATELY: "{{ duplicacy_autobackup_backup_immediately }}"
+      DUPLICACY_INIT_OPTIONS: "{{ duplicacy_autobackup_duplicacy_init_options }}"
+      DUPLICACY_PRUNE_OPTIONS: "{{ duplicacy_autobackup_prune_options }}"
+      PRUNE_SCHEDULE: "{{ duplicacy_autobackup_prune_schedule }}"
+
+- name: Set _duplicacy_autobackup_container_env_special for 'Local disk'
+  ansible.builtin.set_fact:
+    _duplicacy_autobackup_container_env_special:
+      BACKUP_LOCATION: /backup
+  when: duplicacy_autobackup_storage_backend == 'Local disk'
+
+- name: Ensure docker container {{ _duplicacy_autobackup_image }}
+  community.docker.docker_container:
+    name: "{{ duplicacy_autobackup_container_name }}"
+    image: "{{ _duplicacy_autobackup_image }}"
+    restart_policy: always
+    container_default_behavior: compatibility
+    env: "{{ _duplicacy_autobackup_container_env_general | combine(_duplicacy_autobackup_container_env_special) }}"
+    volumes:
+      - "{{ duplicacy_autobackup_backup_location }}:/backup"
+      - "{{ duplicacy_autobackup_working_directory }}:/data"
+      - "{{ duplicacy_autobackup_repository }}:/repository"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_pre_backup_script_file_name }}:/scripts/pre-backup.sh"
+      - "{{ duplicati_autobackup_script_file_path }}/{{ duplicacy_autobackup_post_backup_script_file_name }}:/scripts/post-backup.sh"
+
+# - name: Include storage backend specific task
+#   include_tasks: "storage_backend_{{ duplicacy_autobackup_storage_backend | regex_replace('[ /]', '_') | regex_replace('[()]', '') | lower }}.yml"
 
 ...

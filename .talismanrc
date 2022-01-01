@@ -13,7 +13,7 @@ fileignoreconfig:
   - >
     B2_KEY: "\{\{ duplicacy_autobackup_b2_key \}\}"
 
-- filename: tasks/storage_backend_local_disk.yml
+- filename: tasks/main.yml
   allowed_patterns:
   - >
     BACKUP_ENCRYPTION_KEY: "\{\{ duplicacy_autobackup_backup_encryption_key \}\}"
