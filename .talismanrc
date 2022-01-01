@@ -30,9 +30,13 @@ fileignoreconfig:
   ignore_detectors: [filename]
 
 - filename: test/playbook.yml
+  checksum: 59f7703d2a85053ffccd44f14ee8ef447669d3a6bedbb683c43d11695ea61d0a
   allowed_patterns:
   - >
     duplicacy_autobackup_backup_encryption_key: encryption_key
+  - >
+    duplicati_autobackup_script_file_path\: \"\{\{ playbook_dir \}\}\/.srv-ssh_key\"
+
 
 - filename: defaults/main.yml
   allowed_patterns:
