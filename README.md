@@ -33,7 +33,11 @@ install duplicacy autobackup via https://github.com/christophetd/duplicacy-autob
 | prune | duplicacy_autobackup_prune_options | `-keep 365:3650 -keep 30:365 -keep 7:30 -keep 1:7 -a` | the value for `DUPLICACY_PRUNE_OPTIONS` |
 | prune | duplicacy_autobackup_prune_schedule | `0 4 * * *` | the value for `PRUNE_SCHEDULE` |
 
-## Ansible
+## Test
 
-The storage backends need different parameters and some storage backends need token files.
-This by now is solved by a different task file for each backend.
+This role can be tested by
+```bash
+ansible-playbook test/playbook.yml -e "test_backend='Not implemented'"
+ansible-playbook test/playbook.yml -e "test_backend='Local disk'"
+ansible-playbook test/playbook.yml -e "test_backend='Blackblaze B2'" -e@test/.blackblaze_b2.yml
+```
