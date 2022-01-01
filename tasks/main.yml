@@ -54,58 +54,61 @@
   ansible.builtin.set_fact:
     _duplicacy_autobackup_container_volumes_special: []
 
-- name: Set _duplicacy_autobackup_container_env_special for 'Local disk'
-  ansible.builtin.set_fact:
-    _duplicacy_autobackup_container_env_special:
-      BACKUP_LOCATION: /backup
+- name: Set specials for 'Local disk'
+  block:
+  - name: Set _duplicacy_autobackup_container_env_special for 'Local disk'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_container_env_special:
+        BACKUP_LOCATION: /backup
+
+  - name: Set _duplicacy_autobackup_container_volumes_special for 'Local disk'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
+        [ duplicacy_autobackup_backup_location+':/backup' ] }}"
   when: duplicacy_autobackup_storage_backend == 'Local disk'
 
-- name: Set _duplicacy_autobackup_container_volumes_special for 'Local disk'
-  ansible.builtin.set_fact:
-    _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
-      [ duplicacy_autobackup_backup_location+':/backup' ] }}"
-  when: duplicacy_autobackup_storage_backend == 'Local disk'
-
-- name: Set _duplicacy_autobackup_container_env_special for 'Blackblaze B2'
-  ansible.builtin.set_fact:
-    _duplicacy_autobackup_container_env_special:
-      B2_ID: "{{ duplicacy_autobackup_b2_id }}"
-      B2_KEY: "{{ duplicacy_autobackup_b2_key }}"
+- name: Set specials for 'Blackblaze B2'
+  block:
+  - name: Set _duplicacy_autobackup_container_env_special for 'Blackblaze B2'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_container_env_special:
+        B2_ID: "{{ duplicacy_autobackup_b2_id }}"
+        B2_KEY: "{{ duplicacy_autobackup_b2_key }}"
   when: duplicacy_autobackup_storage_backend == 'Blackblaze B2'
 
-- name: Set _duplicacy_autobackup_container_env_special for 'Onedrive'
-  ansible.builtin.set_fact:
-    _duplicacy_autobackup_container_env_special:
-      ONEDRIVE_TOKEN_FILE: "/srv/{{ duplicacy_autobackup_onedrive_token_file_name }}"
+- name: Set specials for 'Onedrive'
+  block:
+  - name: Set _duplicacy_autobackup_container_env_special for 'Onedrive'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_container_env_special:
+        ONEDRIVE_TOKEN_FILE: "/srv/{{ duplicacy_autobackup_onedrive_token_file_name }}"
+
+  - name: Set _duplicacy_autobackup_container_volumes_special for 'Onedrive'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
+        [ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_onedrive_token_file_name+':/srv/'+duplicacy_autobackup_onedrive_token_file_name ] }}"
+
+  - name: Set _duplicacy_autobackup_secret_file_name for 'Onedrive'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_onedrive_token_file_name }}"
   when: duplicacy_autobackup_storage_backend == 'Onedrive'
 
-- name: Set _duplicacy_autobackup_container_volumes_special for 'Onedrive'
-  ansible.builtin.set_fact:
-    _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
-      [ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_onedrive_token_file_name+':/srv/'+duplicacy_autobackup_onedrive_token_file_name ] }}"
-  when: duplicacy_autobackup_storage_backend == 'Onedrive'
+- name: Set specials for 'SSH/SFTP Keyfile'
+  block:
+  - name: Set _duplicacy_autobackup_container_env_special for 'SSH/SFTP Keyfile'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_container_env_special:
+        SSH_KEY_FILE: "/srv/{{ duplicacy_autobackup_ssh_key_file_name }}"
+        SSH_PASSPHRASE: "{{ duplicacy_autobackup_ssh_passphrase }}"
 
-- name: Set _duplicacy_autobackup_secret_file_name for 'Onedrive'
-  ansible.builtin.set_fact:
-    _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_onedrive_token_file_name }}"
-  when: duplicacy_autobackup_storage_backend == 'Onedrive'
+  - name: Set _duplicacy_autobackup_container_volumes_special for 'SSH/SFTP Keyfile'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
+        [ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_ssh_key_file_name+':/srv/'+duplicacy_autobackup_ssh_key_file_name ] }}"
 
-- name: Set _duplicacy_autobackup_container_env_special for 'SSH/SFTP Keyfile'
-  ansible.builtin.set_fact:
-    _duplicacy_autobackup_container_env_special:
-      SSH_KEY_FILE: "/srv/{{ duplicacy_autobackup_ssh_key_file_name }}"
-      SSH_PASSPHRASE: "{{ duplicacy_autobackup_ssh_passphrase }}"
-  when: duplicacy_autobackup_storage_backend == 'SSH/SFTP Keyfile'
-
-- name: Set _duplicacy_autobackup_container_volumes_special for 'SSH/SFTP Keyfile'
-  ansible.builtin.set_fact:
-    _duplicacy_autobackup_container_volumes_special: "{{ _duplicacy_autobackup_container_volumes_special +
-      [ duplicacy_autobackup_secret_file_path+'/'+duplicacy_autobackup_ssh_key_file_name+':/srv/'+duplicacy_autobackup_ssh_key_file_name ] }}"
-  when: duplicacy_autobackup_storage_backend == 'SSH/SFTP Keyfile'
-
-- name: Set _duplicacy_autobackup_secret_file_name for 'SSH/SFTP Keyfile'
-  ansible.builtin.set_fact:
-    _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_ssh_key_file_name }}"
+  - name: Set _duplicacy_autobackup_secret_file_name for 'SSH/SFTP Keyfile'
+    ansible.builtin.set_fact:
+      _duplicacy_autobackup_secret_file_name: "{{ duplicacy_autobackup_ssh_key_file_name }}"
   when: duplicacy_autobackup_storage_backend == 'SSH/SFTP Keyfile'
 
 - name: Include secret file tasks for 'Onedrive', 'SSH/SFTP Keyfile'
@@ -120,8 +123,5 @@
     container_default_behavior: compatibility
     env: "{{ _duplicacy_autobackup_container_env_general | combine(_duplicacy_autobackup_container_env_special) }}"
     volumes: "{{ _duplicacy_autobackup_container_volumes_general +_duplicacy_autobackup_container_volumes_special }}"
-
-# - name: Include storage backend specific task
-#   include_tasks: "storage_backend_{{ duplicacy_autobackup_storage_backend | regex_replace('[ /]', '_') | regex_replace('[()]', '') | lower }}.yml"
 
 ...
