@@ -6,7 +6,7 @@
 - name: Ensure SSH key file
   ansible.builtin.template_file:
     src: id.j2
-    dest: "{{ duplicacy_autobackup_token_file_path }}/{{ duplicacy_autobackup_ssh_key_file_name }}"
+    dest: "{{ duplicacy_autobackup_secrets_file_path }}/{{ duplicacy_autobackup_ssh_key_file_name }}"
     mode: o-rx
 
 - name: Ensure docker container {{ _duplicacy_autobackup_image }}
